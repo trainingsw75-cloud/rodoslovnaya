@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Родословная Крюковых и Репницыных — Архангельск, Холмогоры, Новокузнецк">
+<title>Две реки — родословная Крюковых и Репницыных</title>
+</head>
+<body>
+
+<style>
+  :root {
+    --ground:   #E8EBE7;
+    --ground-2: #DFE3DE;
+    --bone:     #F6F4EE;
+    --ink:      #17212B;
+    --ink-soft: #556570;
+    --ink-faint:#5F6B73;
+    --line:     #C6CDC7;
+    --dvina:    #2C5C6B;
+    --dvina-w:  #DCE7E9;
+    --tom:      #8A4526;
+    --tom-w:    #EFE0D7;
+    --gap:      #5A6762;
+
+    --serif: Georgia, "PT Serif", "Noto Serif", "Times New Roman", serif;
+    --sans: "Helvetica Neue", "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+
+    --s1: 0.35rem; --s2: 0.7rem; --s3: 1.1rem; --s4: 1.7rem;
+    --s5: 2.6rem; --s6: 4rem; --s7: 6rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:   #121920;
+      --ground-2: #0D141A;
+      --bone:     #1B242B;
+      --ink:      #E3E8E4;
+      --ink-soft: #A2B0B6;
+      --ink-faint:#93A2AA;
+      --line:     #2E3B44;
+      --dvina:    #82B6C3;
+      --dvina-w:  #1B2E36;
+      --tom:      #D18C66;
+      --tom-w:    #33211A;
+      --gap:      #8A9A9F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:   #121920;
+    --ground-2: #0D141A;
+    --bone:     #1B242B;
+    --ink:      #E3E8E4;
+    --ink-soft: #A2B0B6;
+    --ink-faint:#93A2AA;
+    --line:     #2E3B44;
+    --dvina:    #82B6C3;
+    --dvina-w:  #1B2E36;
+    --tom:      #D18C66;
+    --tom-w:    #33211A;
+    --gap:      #8A9A9F;
+  }
+  :root[data-theme="light"] {
+    --ground:   #E8EBE7;
+    --ground-2: #DFE3DE;
+    --bone:     #F6F4EE;
+    --ink:      #17212B;
+    --ink-soft: #556570;
+    --ink-faint:#5F6B73;
+    --line:     #C6CDC7;
+    --dvina:    #2C5C6B;
+    --dvina-w:  #DCE7E9;
+    --tom:      #8A4526;
+    --tom-w:    #EFE0D7;
+    --gap:      #5A6762;
+  }
+
+  * { box-sizing: border-box; }
+
+  .page {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
+
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 0 1.15rem;
+  }
+
+  /* ---------- шапка ---------- */
+
+  .hero {
+    padding: var(--s6) 0 var(--s5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero__rivers { width: 100%; max-width: 21rem; height: auto; display: block; }
+  .hero__rivers path { fill: none; stroke-width: 1.6; stroke-linecap: round; }
+  .river-a { stroke: var(--dvina); }
+  .river-b { stroke: var(--tom); }
+  .river-join { fill: var(--ink); }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  .hero__title {
+    font-size: clamp(2.3rem, 11vw, 3.6rem);
+    line-height: 1.02;
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  .hero__lede {
+    margin: 0;
+    max-width: 30rem;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    text-wrap: pretty;
+  }
+
+  /* ---------- счётчики ---------- */
+
+  .tally {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin: var(--s4) 0 var(--s6);
+  }
+  .tally__cell {
+    background: var(--bone);
+    padding: var(--s3) var(--s2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+  }
+  .tally__num {
+    font-family: var(--sans);
+    font-variant-numeric: tabular-nums;
+    font-size: 1.85rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+  .tally__cell--gaps .tally__num { color: var(--gap); }
+  .tally__lbl {
+    font-family: var(--sans);
+    font-size: 0.64rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- хроника ---------- */
+
+  .chron { padding: var(--s5) 0 var(--s4); }
+  .chron__title { font-size: 1.5rem; margin: 0 0 var(--s1); font-weight: 400; }
+  .chron__sub { margin: 0 0 var(--s4); color: var(--ink-soft); font-size: 0.94rem; max-width: 32rem; }
+
+  .chron__row {
+    display: grid;
+    grid-template-columns: 5.4rem 1fr;
+    gap: var(--s2);
+    padding: var(--s2) 0 var(--s2) var(--s2);
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+    border-left: 2px solid transparent;
+  }
+  .chron__row:first-of-type { border-top: 0; }
+  .chron__row--north { border-left-color: var(--dvina); }
+  .chron__row--sib   { border-left-color: var(--tom); }
+  .chron__row--key   { background: var(--bone); }
+
+  .chron__year {
+    font-family: var(--sans);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .chron__year--approx { font-weight: 400; color: var(--ink-faint); }
+  .chron__what { font-size: 0.97rem; color: var(--ink-soft); text-wrap: pretty; }
+  .chron__what strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- поколение ---------- */
+
+  .gen { padding: var(--s5) 0; border-top: 1px solid var(--line); }
+  .gen:first-of-type { border-top: 0; }
+
+  .gen__head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s2);
+    margin-bottom: var(--s4);
+    flex-wrap: wrap;
+  }
+  .gen__numeral {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+    border: 1px solid var(--line);
+    padding: 0.25em 0.6em;
+    flex: none;
+  }
+  .gen__title { font-size: 1.5rem; margin: 0; font-weight: 400; letter-spacing: -0.01em; }
+  .gen__note {
+    width: 100%;
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.94rem;
+    max-width: 34rem;
+  }
+
+  .people { display: flex; flex-direction: column; gap: var(--s2); }
+
+  /* ---------- карточка человека ---------- */
+
+  .card {
+    background: var(--bone);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line);
+  }
+  .card--dvina { border-left-color: var(--dvina); }
+  .card--tom   { border-left-color: var(--tom); }
+  .card--gap {
+    background: transparent;
+    border: 1px dashed var(--gap);
+    border-left: 1px dashed var(--gap);
+  }
+
+  .card > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: var(--s3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+  }
+  .card > summary::-webkit-details-marker { display: none; }
+  .card > summary:focus-visible {
+    outline: 2px solid var(--dvina);
+    outline-offset: -2px;
+  }
+
+  .card__role {
+    font-family: var(--sans);
+    font-size: 0.63rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+  .card__name {
+    font-size: 1.24rem;
+    line-height: 1.22;
+    text-wrap: balance;
+  }
+  .card--gap .card__name { color: var(--gap); font-style: italic; }
+
+  .card__meta {
+    font-family: var(--sans);
+    font-size: 0.86rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-soft);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.6rem;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: var(--s1); }
+  .chip {
+    font-family: var(--sans);
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    padding: 0.2em 0.55em;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .chip--live  { border-color: var(--dvina); color: var(--dvina); background: var(--dvina-w); }
+  .chip--gone  { border-color: var(--line); color: var(--ink-faint); }
+  .chip--north { border-color: var(--dvina); color: var(--dvina); }
+  .chip--sib   { border-color: var(--tom); color: var(--tom); background: var(--tom-w); }
+  .chip--ask   { border-style: dashed; border-color: var(--gap); color: var(--gap); }
+  .chip--check { border-color: var(--tom); color: var(--tom); border-style: dashed; }
+
+  .version {
+    border: 1px dashed var(--tom);
+    background: var(--tom-w);
+    padding: var(--s3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+  }
+  .version__tag {
+    font-family: var(--sans);
+    font-size: 0.63rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--tom);
+  }
+  .version p { color: var(--ink); font-size: 0.95rem; }
+
+  .card__body {
+    padding: 0 var(--s3) var(--s3);
+    border-top: 1px solid var(--line);
+    margin-top: var(--s2);
+    padding-top: var(--s3);
+    font-size: 0.97rem;
+    color: var(--ink-soft);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+  }
+  .card--gap .card__body { border-top-color: var(--gap); }
+  .card__body p { margin: 0; text-wrap: pretty; }
+  .card__body strong { color: var(--ink); font-weight: 600; }
+
+  .known {
+    font-family: var(--sans);
+    font-size: 0.87rem;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.3rem 0.8rem;
+  }
+  .known dt { color: var(--ink-faint); }
+  .known dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  .hint {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--gap);
+    border-left: 2px solid var(--gap);
+    padding-left: var(--s2);
+  }
+
+  .expand {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: var(--s1);
+  }
+  .card[open] .expand { display: none; }
+
+  /* ---------- туман ---------- */
+
+  .fog {
+    margin-top: var(--s4);
+    padding: var(--s6) var(--s3);
+    text-align: center;
+    background: linear-gradient(to bottom, transparent, var(--ground-2));
+    border: 1px dashed var(--line);
+    border-top: 0;
+  }
+  .fog__q {
+    font-size: clamp(3rem, 18vw, 5.5rem);
+    line-height: 1;
+    color: var(--gap);
+    opacity: 0.45;
+    display: block;
+    margin-bottom: var(--s2);
+  }
+  .fog p { margin: 0 auto; max-width: 26rem; color: var(--ink-soft); }
+
+  /* ---------- подвал ---------- */
+
+  .ask { padding: var(--s5) 0; border-top: 1px solid var(--line); }
+  .ask__title { font-size: 1.35rem; margin: 0 0 var(--s3); font-weight: 400; }
+  .ask ol {
+    margin: 0;
+    padding-left: 1.3em;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+    color: var(--ink-soft);
+  }
+  .ask li::marker { color: var(--ink-faint); font-family: var(--sans); font-size: 0.85em; }
+  .ask li strong { color: var(--ink); font-weight: 600; }
+
+  .honesty {
+    margin: var(--s5) 0 var(--s7);
+    padding: var(--s3);
+    border: 1px solid var(--line);
+    background: var(--bone);
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .honesty p { margin: 0 0 var(--s2); }
+  .honesty p:last-child { margin: 0; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s2) var(--s3);
+    margin-top: var(--s3);
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .legend span { display: flex; align-items: center; gap: 0.4rem; }
+  .swatch { width: 0.85rem; height: 0.85rem; flex: none; border: 1px solid var(--line); }
+  .swatch--dvina { background: var(--dvina); border-color: var(--dvina); }
+  .swatch--tom { background: var(--tom); border-color: var(--tom); }
+  .swatch--gap { background: transparent; border: 1px dashed var(--gap); }
+
+  /* ---------- появление ---------- */
+
+  @media (prefers-reduced-motion: no-preference) {
+    .gen, .hero, .tally { animation: rise 0.7s ease-out both; }
+    .gen:nth-of-type(2) { animation-delay: 0.06s; }
+    .gen:nth-of-type(3) { animation-delay: 0.12s; }
+    .gen:nth-of-type(4) { animation-delay: 0.18s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(0.8rem); }
+      to   { opacity: 1; transform: none; }
+    }
+    .card { transition: border-left-color 0.2s ease; }
+  }
+
+  @media (min-width: 46rem) {
+    .page { font-size: 18px; }
+    .hero { padding-top: var(--s7); }
+    .people--pair { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
+    .gen__head { margin-bottom: var(--s4); }
+  }
+</style>
+
+<div class="page">
+  <div class="wrap">
+
+    <header class="hero">
+      <svg class="hero__rivers" viewBox="0 0 320 128" role="img" aria-label="Две реки сходятся в одну точку">
+        <path class="river-a" d="M18 8 C 62 46, 104 62, 160 112" />
+        <path class="river-b" d="M302 8 C 258 46, 216 62, 160 112" />
+        <circle class="river-join" cx="160" cy="113" r="3.4" />
+      </svg>
+
+      <span class="eyebrow">Родословная · черновик · август 2026</span>
+      <h1 class="hero__title">Две реки</h1>
+      <p class="hero__lede">
+        Один род пришёл с Северной Двины — из деревни Курья под Холмогорами.
+        Другой с Томи — из Новокузнецка, что звался Сталинском.
+        Сошлись они в Архангельске в 1975 году.
+      </p>
+    </header>
+
+    <div class="tally">
+      <div class="tally__cell">
+        <span class="tally__num">13</span>
+        <span class="tally__lbl">человек известно</span>
+      </div>
+      <div class="tally__cell tally__cell--gaps">
+        <span class="tally__num">5</span>
+        <span class="tally__lbl">пустых клеток</span>
+      </div>
+      <div class="tally__cell">
+        <span class="tally__num">4</span>
+        <span class="tally__lbl">поколения</span>
+      </div>
+    </div>
+
+    <!-- ХРОНИКА -->
+    <section class="chron">
+      <h2 class="chron__title">Хроника рода</h2>
+      <p class="chron__sub">
+        Всё, что мы можем поставить на шкалу времени. Год со знаком «около» —
+        это расчёт, а не документ.
+      </p>
+
+      <div class="chron__row chron__row--north">
+        <span class="chron__year chron__year--approx">≈1915–30</span>
+        <span class="chron__what">Где-то в эти годы родился <strong>Максим Константинович Репницын</strong>. Точный год неизвестен.</span>
+      </div>
+
+      <div class="chron__row chron__row--north chron__row--key">
+        <span class="chron__year">1941</span>
+        <span class="chron__what">
+          <strong>Максим попадает в лагерь</strong> — с первого года войны.
+          В семье говорят, что он был водителем и в этот момент оказался у границы —
+          то ли в Белоруссии, то ли в средней полосе СССР. За что именно его взяли —
+          семья не знает до сих пор.
+        </span>
+      </div>
+
+      <div class="chron__row chron__row--north">
+        <span class="chron__year chron__year--approx">≈1948</span>
+        <span class="chron__what">Вернулся живым. Расчёт по дате рождения старшей дочери — значит отсутствовал около семи лет.</span>
+      </div>
+
+      <div class="chron__row chron__row--north">
+        <span class="chron__year">1949</span>
+        <span class="chron__what">17 февраля родилась <strong>Валентина</strong>. Деревня Курья.</span>
+      </div>
+
+      <div class="chron__row chron__row--north">
+        <span class="chron__year">1951</span>
+        <span class="chron__what">30 июня родилась <strong>Наталья</strong> — мать Романа. Деревня Курья.</span>
+      </div>
+
+      <div class="chron__row chron__row--north">
+        <span class="chron__year chron__year--approx">≈1960</span>
+        <span class="chron__what">Семья снимается с деревни и перебирается <strong>в Архангельск</strong> — Наталье было тогда около девяти лет.</span>
+      </div>
+
+      <div class="chron__row chron__row--north">
+        <span class="chron__year">1963</span>
+        <span class="chron__what">2 марта родилась <strong>Людмила</strong> — первая в семье, кто родился уже в городе.</span>
+      </div>
+
+      <div class="chron__row chron__row--sib">
+        <span class="chron__year">1975</span>
+        <span class="chron__what">8 ноября родился <strong>Роман</strong>. 19 декабря — двоюродная сестра <strong>Ирина</strong>. Сорок один день разницы.</span>
+      </div>
+
+      <div class="chron__row chron__row--sib chron__row--key">
+        <span class="chron__year chron__year--approx">≈1979</span>
+        <span class="chron__what">
+          <strong>Крюков Лев Дмитриевич пропадает без вести.</strong>
+          Сыну четыре года. Что случилось — неизвестно до сих пор.
+        </span>
+      </div>
+
+      <div class="chron__row">
+        <span class="chron__year">2026</span>
+        <span class="chron__what">Начат этот поиск.</span>
+      </div>
+    </section>
+
+    <!-- ПОКОЛЕНИЕ I -->
+    <section class="gen">
+      <div class="gen__head">
+        <span class="gen__numeral">I</span>
+        <h2 class="gen__title">Наше поколение</h2>
+        <p class="gen__note">Двоюродные, родившиеся в Архангельске с разницей в сорок один день.</p>
+      </div>
+
+      <div class="people">
+        <details class="card card--tom">
+          <summary>
+            <span class="card__role">Тот, ради кого всё это</span>
+            <span class="card__name">Крюков Роман Львович</span>
+            <span class="card__meta"><span>8 ноября 1975</span><span>· Архангельск</span></span>
+            <span class="chips"><span class="chip chip--sib">линия Крюковых</span><span class="chip chip--north">линия Репницыных</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>В нём сходятся обе реки: отец с Томи, мать с Северной Двины. Судовой повар.</p>
+          </div>
+        </details>
+
+        <details class="card card--dvina">
+          <summary>
+            <span class="card__role">Двоюродная сестра по матери</span>
+            <span class="card__name">Кривошапко Ирина Петровна</span>
+            <span class="card__meta"><span>19 декабря 1975</span><span>· Архангельск</span></span>
+            <span class="chips"><span class="chip chip--north">внучка Максима</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>Дочь Валентины Максимовны. Родилась через сорок один день после Романа — двоюродные почти ровесники.</p>
+          </div>
+        </details>
+
+        <details class="card card--dvina">
+          <summary>
+            <span class="card__role">Двоюродный брат по матери</span>
+            <span class="card__name">Репницын Максим Александрович</span>
+            <span class="card__meta"><span>· Архангельск</span></span>
+            <span class="chips"><span class="chip chip--live">жив</span><span class="chip chip--north">носит фамилию</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              Сын Александра Максимовича и Надежды. Назван в честь деда —
+              Максима Константиновича. Единственный известный молодой
+              <strong>Репницын по фамилии</strong>.
+            </p>
+            <p class="hint">Нужен год рождения — и есть ли у него своя семья.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ПОКОЛЕНИЕ II -->
+    <section class="gen">
+      <div class="gen__head">
+        <span class="gen__numeral">II</span>
+        <h2 class="gen__title">Родители, дяди и тёти</h2>
+        <p class="gen__note">
+          Четверо детей Максима Репницына. Старшие родились ещё в деревне Курья,
+          младшая — уже в городе. Между 1951 и 1963 годом семья снялась с деревни
+          и перебралась в Архангельск.
+        </p>
+      </div>
+
+      <div class="people">
+        <details class="card card--tom">
+          <summary>
+            <span class="card__role">Отец</span>
+            <span class="card__name">Крюков Лев Дмитриевич</span>
+            <span class="card__meta"><span>год рождения неизвестен</span><span>· родом из Новокузнецка</span></span>
+            <span class="chips"><span class="chip chip--gone">пропал без вести</span><span class="chip chip--ask">примерно с 1979 года</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              Работал <strong>барменом</strong>. По семейным словам — весёлый мужик,
+              старался держаться высоко. <strong>Он пропал без вести
+              примерно в 1979 году</strong> — сыну было тогда около четырёх лет.
+              Своих воспоминаний об отце у Романа не осталось.
+            </p>
+            <p>
+              Мы не знаем ни года его рождения, ни что с ним случилось,
+              ни где он лежит.
+            </p>
+            <p class="hint">
+              Если вы помните Льва Дмитриевича — отзовитесь. Годится всё:
+              где именно он работал барменом, в каком году его видели
+              в последний раз, заявляли ли в милицию, был ли суд.
+              Даже слух — это больше, чем есть сейчас.
+            </p>
+          </div>
+        </details>
+
+        <details class="card card--dvina">
+          <summary>
+            <span class="card__role">Мать</span>
+            <span class="card__name">Репницына Наталья Максимовна</span>
+            <span class="card__meta"><span>30 июня 1951</span><span>· дер. Курья</span></span>
+            <span class="chips"><span class="chip chip--live">жива</span><span class="chip chip--north">родилась в деревне</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              <strong>Главный человек этой страницы.</strong> Она родилась в Курье
+              и помнит своих родителей живыми. Всё, что ниже помечено вопросом,
+              скорее всего знает она.
+            </p>
+          </div>
+        </details>
+
+        <details class="card card--dvina">
+          <summary>
+            <span class="card__role">Тётя · старшая сестра матери</span>
+            <span class="card__name">Репницына Валентина Максимовна</span>
+            <span class="card__meta"><span>17 февраля 1949</span><span>· дер. Курья</span></span>
+            <span class="chips"><span class="chip chip--live">жива</span><span class="chip chip--north">родилась в деревне</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>Старшая из четверых. Замужем за Петром Николаевичем Кривошапко, мать Ирины.</p>
+          </div>
+        </details>
+
+        <details class="card">
+          <summary>
+            <span class="card__role">Муж Валентины · вошёл в род через брак</span>
+            <span class="card__name">Кривошапко Пётр Николаевич</span>
+            <span class="card__meta"><span>даты неизвестны</span></span>
+            <span class="chips"><span class="chip chip--ask">откуда фамилия?</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              Фамилия южная, для Архангельска чужая. Как Кривошапко оказался на Севере —
+              война, флот, распределение? Отдельная история, которую стоит записать,
+              пока есть у кого спросить.
+            </p>
+            <p class="hint">Его отца звали Николаем — это следует из отчества. Больше мы не знаем ничего.</p>
+          </div>
+        </details>
+
+        <details class="card card--dvina">
+          <summary>
+            <span class="card__role">Дядя · единственный сын Максима</span>
+            <span class="card__name">Репницын Александр Максимович</span>
+            <span class="card__meta"><span>год рождения неизвестен</span><span>· Архангельск</span></span>
+            <span class="chips"><span class="chip chip--live">жив</span><span class="chip chip--north">фамилия жива</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              <strong>Живёт в Архангельске с женой Надеждой.</strong>
+              Три сестры вышли замуж и сменили фамилию — Александр
+              сохранил её и передал дальше.
+            </p>
+            <p class="hint">Нужен год рождения. И главное — есть ли у них дети.</p>
+          </div>
+        </details>
+
+        <details class="card card--dvina">
+          <summary>
+            <span class="card__role">Жена Александра</span>
+            <span class="card__name">Надежда Репницына</span>
+            <span class="card__meta"><span>отчество и девичья фамилия неизвестны</span><span>· Архангельск</span></span>
+            <span class="chips"><span class="chip chip--live">жива</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>Знаем только имя. Отчество, девичью фамилию и год рождения ещё предстоит записать.</p>
+          </div>
+        </details>
+
+
+        <details class="card card--dvina">
+          <summary>
+            <span class="card__role">Тётя · младшая сестра матери</span>
+            <span class="card__name">Репницына Людмила Максимовна</span>
+            <span class="card__meta"><span>2 марта 1963</span><span>· Архангельск</span></span>
+            <span class="chips"><span class="chip chip--north">родилась уже в городе</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              Первая в семье, кто родился не в деревне. По её метрике видно,
+              что переезд из Курьи в Архангельск случился до 1963 года.
+            </p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ПОКОЛЕНИЕ III -->
+    <section class="gen">
+      <div class="gen__head">
+        <span class="gen__numeral">III</span>
+        <h2 class="gen__title">Деды и бабки</h2>
+        <p class="gen__note">
+          Здесь начинается туман. Имена дедов мы вывели из отчеств их детей —
+          это надёжно. Обе бабушки не известны никак.
+        </p>
+      </div>
+
+      <div class="people">
+        <details class="card card--dvina" open>
+          <summary>
+            <span class="card__role">Дед по матери</span>
+            <span class="card__name">Репницын Максим Константинович</span>
+            <span class="card__meta"><span>≈1915–1930</span><span>· дер. Курья</span></span>
+            <span class="chips"><span class="chip chip--north">четверо детей</span><span class="chip chip--gone">лагерь с 1941</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <dl class="known">
+              <dt>Жена</dt><dd>Зинаида Фёдоровна</dd>
+              <dt>Дети</dt><dd>три дочери и сын: Валентина 1949, Наталья 1951, Людмила 1963, Александр</dd>
+              <dt>Год рожд.</dt><dd>примерно 1915–1930</dd>
+            </dl>
+            <p>
+              <strong>С первого года войны он сидел в лагере.</strong> На фронт не попал.
+              В семье говорят, что он был водителем и в тот момент оказался у границы —
+              то ли в Белоруссии, то ли в средней полосе СССР. Сам Роман не уверен
+              даже в географии — настолько это старое, размытое предание.
+            </p>
+            <div class="version">
+              <span class="version__tag">Развилка · требует уточнения</span>
+              <p>
+                Если это была западная граница летом 1941-го — «лагерь» в семейной
+                речи мог означать не советский лагерь, а <strong>немецкий плен</strong>.
+                Это две совсем разные истории и два разных архива для поиска.
+                Мы не решаем сами, какая верна — проверяем обе.
+              </p>
+            </div>
+            <p>
+              Срок можно прикинуть по детям. Старшая дочь родилась в феврале 1949-го
+              в родной деревне — значит домой он вернулся не позже 1948-го,
+              то есть отсутствовал около семи лет. Из Курьи в Архангельск семья
+              переехала позже, когда Наталье было около девяти — примерно в 1960-м.
+            </p>
+            <p class="hint">
+              Кто помнит подробнее — где именно он был, за что взяли,
+              рассказывал ли сам про лагерь — скажите, даже обрывками.
+            </p>
+          </div>
+        </details>
+
+        <details class="card card--dvina">
+          <summary>
+            <span class="card__role">Бабушка по матери · жена Максима</span>
+            <span class="card__name">Зинаида Фёдоровна</span>
+            <span class="card__meta"><span>девичья фамилия неизвестна</span><span>· дер. Курья</span></span>
+            <span class="chips"><span class="chip chip--ask">девичья фамилия?</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              Мать четверых детей, родившихся в деревне Курья и в Архангельске.
+              Ждала мужа семь лет, пока он был в лагере.
+            </p>
+            <p class="hint">
+              Знаем имя и отчество. Не знаем девичью фамилию, год рождения
+              и жива ли она сейчас.
+            </p>
+          </div>
+        </details>
+
+        <details class="card card--tom">
+          <summary>
+            <span class="card__role">Дед по отцу</span>
+            <span class="card__name">Крюков Дмитрий</span>
+            <span class="card__meta"><span>отчество неизвестно</span><span>· Новокузнецк</span></span>
+            <span class="chips"><span class="chip chip--sib">Сталинск</span><span class="chip chip--check">есть версия</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              Имя выведено из отчества сына — Лев Дмитриевич. Больше ничего.
+              Новокузнецк с 1932 по 1961 год назывался Сталинском, и город был
+              приезжий: люди съезжались со всей страны на Кузнецкстрой.
+              Откуда пришли туда Крюковы — вопрос открытый.
+            </p>
+            <div class="version">
+              <span class="version__tag">Версия · не подтверждена</span>
+              <p>
+                В базе «Память народа» есть <strong>Крюков Дмитрий Васильевич,
+                1921 года рождения, г. Новокузнецк</strong> — старший сержант,
+                командир орудия в 1-м отдельном дивизионе бронепоездов.
+                Имя и город совпадают. Отчество сверить не с чем.
+              </p>
+              <p>
+                <strong>Если кто-то помнит, что деда звали Дмитрий Васильевич —
+                скажите.</strong> Одно слово закроет эту клетку и откроет ещё одну:
+                тогда прадеда звали Василий Крюков.
+              </p>
+            </div>
+          </div>
+        </details>
+
+        <details class="card card--gap">
+          <summary>
+            <span class="card__role">Бабушка по отцу · жена Дмитрия</span>
+            <span class="card__name">Имя неизвестно</span>
+            <span class="card__meta"><span>пустая клетка</span></span>
+            <span class="chips"><span class="chip chip--ask">кто она?</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>Мать Льва Дмитриевича. О ней не известно ничего.</p>
+            <p class="hint">
+              Её имя записано в свидетельстве о рождении отца — документ существует
+              в архиве ЗАГС Кемеровской области.
+            </p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ПОКОЛЕНИЕ IV -->
+    <section class="gen">
+      <div class="gen__head">
+        <span class="gen__numeral">IV</span>
+        <h2 class="gen__title">Прадеды</h2>
+        <p class="gen__note">
+          Ни одного имени. Четыре пустые клетки — родители Максима и родители Дмитрия.
+        </p>
+      </div>
+
+      <div class="people">
+        <details class="card card--gap">
+          <summary>
+            <span class="card__role">Родители Максима Репницына</span>
+            <span class="card__name">Двое неизвестных · Холмогорский уезд</span>
+            <span class="card__meta"><span>предположительно 1880–1905</span></span>
+            <span class="chips"><span class="chip chip--ask">две клетки</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              Это уже метрические книги: рождения, венчания и отпевания велись
+              по приходу, к которому относилась Курья. Такие книги по Архангельской
+              губернии сохранились хорошо — дальше в глубь века дорога есть.
+            </p>
+          </div>
+        </details>
+
+        <details class="card card--gap">
+          <summary>
+            <span class="card__role">Родители Дмитрия Крюкова</span>
+            <span class="card__name">Двое неизвестных · место неизвестно</span>
+            <span class="card__meta"><span>предположительно 1875–1900</span></span>
+            <span class="chips"><span class="chip chip--ask">две клетки</span></span>
+            <span class="expand">Нажмите, чтобы раскрыть</span>
+          </summary>
+          <div class="card__body">
+            <p>
+              Здесь даже не ясно, в какой губернии искать: Крюковы попали в Кузбасс
+              откуда-то ещё. Сначала нужно поднять свидетельство о рождении Льва,
+              и только потом двигаться дальше.
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <div class="fog">
+        <span class="fog__q" aria-hidden="true">?</span>
+        <p>Дальше — туман. Пока.</p>
+      </div>
+    </section>
+
+    <!-- ЧТО СПРОСИТЬ -->
+    <section class="ask">
+      <h2 class="ask__title">Если вы читаете это и вы наша родня</h2>
+      <ol>
+        <li><strong>Где именно взяли деда Максима в 1941-м — на какой границе, в какой момент?</strong> От этого зависит, искать ли его как советского заключённого или как военнопленного у немцев. Это разные архивы.</li>
+        <li><strong>Девичья фамилия бабушки Зинаиды Фёдоровны?</strong> И откуда она родом.</li>
+        <li><strong>Где работал барменом Лев Дмитриевич?</strong> На судне загранплавания, в ресторане, в гостинице? Это может объяснить и его исчезновение.</li>
+        <li><strong>Когда и откуда пропал Лев Дмитриевич?</strong> Заявляли ли в милицию, был ли суд, получал ли Роман пенсию по потере кормильца.</li>
+        <li><strong>Как звали родителей Максима Константиновича?</strong> Хотя бы имена прадеда и прабабки.</li>
+        <li><strong>Какого года рождения Александр Максимович и Максим Александрович?</strong></li>
+        <li><strong>Сохранились ли фотографии, письма, конверты с обратным адресом?</strong> Конверт из Новокузнецка или справка об освобождении деда стоят дороже месяца поисков.</li>
+      </ol>
+
+      <div class="legend">
+        <span><i class="swatch swatch--dvina"></i>линия Репницыных, Северная Двина</span>
+        <span><i class="swatch swatch--tom"></i>линия Крюковых, река Томь</span>
+        <span><i class="swatch swatch--gap"></i>пустая клетка, ждём имя</span>
+      </div>
+    </section>
+
+    <div class="honesty">
+      <p>
+        <strong>Здесь нет ни одного выдуманного человека.</strong> Всё, что написано,
+        сказано живыми людьми. Где данных нет — стоит пустая клетка, а не красивая догадка.
+      </p>
+      <p>
+        Два имени выведены по правилу отчеств: раз сын Лев Дмитриевич — значит, отца
+        звали Дмитрием; раз дочери Максимовны — значит, отца звали Максимом. Это
+        надёжный вывод, но всё остальное про них ещё предстоит найти.
+      </p>
+      <p>
+        Страница будет пополняться. Знаете что-то — скажите Роману, и клетка закроется.
+      </p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
