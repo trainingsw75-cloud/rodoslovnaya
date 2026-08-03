@@ -448,7 +448,49 @@
     .people--pair { display: grid; grid-template-columns: 1fr 1fr; align-items: start; }
     .gen__head { margin-bottom: var(--s4); }
   }
+
+  /* ---------- подвал-паспорт ---------- */
+
+  .colophon {
+    border-top: 3px double var(--line);
+    padding: var(--s4) 0 var(--s6);
+    text-align: center;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+  }
+  .colophon__seal {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .colophon a { color: var(--dvina); text-decoration: none; border-bottom: 1px solid var(--dvina); }
+  .colophon__links { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s3); justify-content: center; }
+
+  /* ---------- печать: семейная грамота ---------- */
+
+  @media print {
+    .page { background: #fff; color: #111; font-size: 11pt; }
+    .expand, .hero__rivers { display: none; }
+    .card, .chron__row--key, .honesty { break-inside: avoid; }
+    .gen { break-before: page; padding: 1.2rem 0; }
+    .chron { break-before: avoid; }
+    .card { border: 1px solid #999; border-left: 3px solid #555; margin-bottom: 0.5rem; }
+    .colophon { border-top: 3px double #999; }
+    a { color: inherit; }
+  }
 </style>
+<script>
+  // Перед печатью раскрываем все карточки, чтобы на бумаге был весь текст
+  window.addEventListener('beforeprint', function () {
+    document.querySelectorAll('details.card').forEach(function (d) { d.setAttribute('open', ''); });
+  });
+</script>
 
 <div class="page">
   <div class="wrap">
@@ -460,7 +502,7 @@
         <circle class="river-join" cx="160" cy="113" r="3.4" />
       </svg>
 
-      <span class="eyebrow">Родословная · черновик · август 2026</span>
+      <span class="eyebrow">Свод рода · Архангельск — Холмогоры — Новокузнецк</span>
       <h1 class="hero__title">Две реки</h1>
       <p class="hero__lede">
         Один род пришёл с Северной Двины — из деревни Курья под Холмогорами.
@@ -956,6 +998,16 @@
         Страница будет пополняться. Знаете что-то — скажите Роману, и клетка закроется.
       </p>
     </div>
+
+    <footer class="colophon">
+      <span class="colophon__seal">Крюковы · Репницыны</span>
+      <span>Свод рода составлен 3 августа 2026 года. Собирает Крюков Роман Львович.</span>
+      <span class="colophon__links">
+        <a href="https://rodoslovnaya.website.yandexcloud.net">rodoslovnaya.website.yandexcloud.net</a>
+        <a href="https://trainingsw75-cloud.github.io/rodoslovnaya/">trainingsw75-cloud.github.io/rodoslovnaya</a>
+      </span>
+      <span>Эту страницу можно распечатать — карточки раскроются сами.</span>
+    </footer>
 
   </div>
 </div>
