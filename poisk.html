@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ИИ-поиск по фамилиям Репницын, Крюков, Лютиков — Архангельск, Холмогоры, Верховажье, Новокузнецк">
+<title>Поиск по фамилии — Две реки</title>
+</head>
+<body>
+
+<style>
+  :root {
+    --ground:   #E8EBE7;
+    --ground-2: #DFE3DE;
+    --bone:     #F6F4EE;
+    --ink:      #17212B;
+    --ink-soft: #556570;
+    --ink-faint:#5F6B73;
+    --line:     #C6CDC7;
+    --dvina:    #2C5C6B;
+    --dvina-w:  #DCE7E9;
+    --tom:      #8A4526;
+    --tom-w:    #EFE0D7;
+    --gap:      #5A6762;
+
+    --serif: Georgia, "PT Serif", "Noto Serif", "Times New Roman", serif;
+    --sans: "Helvetica Neue", "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+
+    --s1: 0.35rem; --s2: 0.7rem; --s3: 1.1rem; --s4: 1.7rem;
+    --s5: 2.6rem; --s6: 4rem; --s7: 6rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:   #121920;
+      --ground-2: #0D141A;
+      --bone:     #1B242B;
+      --ink:      #E3E8E4;
+      --ink-soft: #A2B0B6;
+      --ink-faint:#93A2AA;
+      --line:     #2E3B44;
+      --dvina:    #82B6C3;
+      --dvina-w:  #1B2E36;
+      --tom:      #D18C66;
+      --tom-w:    #33211A;
+      --gap:      #8A9A9F;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body { margin: 0; }
+
+  .page {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 0 1.15rem;
+  }
+
+  .hero {
+    padding: var(--s6) 0 var(--s4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    align-items: center;
+    text-align: center;
+  }
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+  .hero__title {
+    font-size: clamp(2rem, 9vw, 3.2rem);
+    line-height: 1.05;
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .hero__lede {
+    margin: 0;
+    max-width: 32rem;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    text-wrap: pretty;
+  }
+  .backlink {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--dvina);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .gen { padding: var(--s5) 0; border-top: 1px solid var(--line); }
+  .gen__head { display: flex; align-items: baseline; gap: var(--s2); margin-bottom: var(--s3); flex-wrap: wrap; }
+  .gen__numeral {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+    border: 1px solid var(--line);
+    padding: 0.25em 0.6em;
+    flex: none;
+  }
+  .gen__title { font-size: 1.5rem; margin: 0; font-weight: 400; letter-spacing: -0.01em; }
+  .gen__note { width: 100%; margin: 0; color: var(--ink-soft); font-size: 0.94rem; max-width: 36rem; }
+
+  /* ---------- выбор фамилии ---------- */
+
+  .picker { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: var(--s3) 0 var(--s2); }
+  .fam {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    padding: 0.45em 0.9em;
+    border: 1px solid var(--line);
+    background: var(--bone);
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .fam--on { border-color: var(--dvina); color: var(--dvina); background: var(--dvina-w); }
+  .fam--tom.fam--on { border-color: var(--tom); color: var(--tom); background: var(--tom-w); }
+
+  .custom {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: var(--s3);
+  }
+  .custom input {
+    flex: 1;
+    font-family: var(--serif);
+    font-size: 1rem;
+    padding: 0.5em 0.8em;
+    border: 1px solid var(--line);
+    background: var(--bone);
+    color: var(--ink);
+    min-width: 0;
+  }
+  .custom input:focus-visible { outline: 2px solid var(--dvina); outline-offset: -2px; }
+
+  .variants {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    border: 1px dashed var(--gap);
+    padding: var(--s2) var(--s3);
+    margin: 0 0 var(--s3);
+  }
+  .variants b { color: var(--ink-soft); }
+
+  /* ---------- базы ---------- */
+
+  .bases { display: flex; flex-direction: column; gap: var(--s2); }
+  .base {
+    background: var(--bone);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--dvina);
+    padding: var(--s3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+    text-decoration: none;
+    color: inherit;
+  }
+  .base:hover { border-left-color: var(--tom); }
+  .base__role {
+    font-family: var(--sans);
+    font-size: 0.63rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+  .base__name { font-size: 1.15rem; line-height: 1.25; color: var(--dvina); }
+  .base__what { font-size: 0.9rem; color: var(--ink-soft); font-family: var(--sans); }
+
+  /* ---------- ИИ-чат ---------- */
+
+  .chat {
+    background: var(--bone);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--tom);
+  }
+  .chat__log {
+    padding: var(--s3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s2);
+    max-height: 26rem;
+    overflow-y: auto;
+  }
+  .msg { max-width: 92%; padding: var(--s2) var(--s3); font-size: 0.95rem; }
+  .msg--user {
+    align-self: flex-end;
+    background: var(--dvina-w);
+    border: 1px solid var(--dvina);
+    color: var(--ink);
+  }
+  .msg--ai {
+    align-self: flex-start;
+    background: var(--ground-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    white-space: pre-wrap;
+  }
+  .msg--wait { color: var(--ink-faint); font-style: italic; border-style: dashed; }
+  .chat__form {
+    display: flex;
+    gap: 0.4rem;
+    padding: var(--s2);
+    border-top: 1px solid var(--line);
+  }
+  .chat__form textarea {
+    flex: 1;
+    font-family: var(--serif);
+    font-size: 1rem;
+    padding: 0.5em 0.8em;
+    border: 1px solid var(--line);
+    background: var(--ground);
+    color: var(--ink);
+    resize: none;
+    min-width: 0;
+    height: 3.2em;
+  }
+  .chat__form textarea:focus-visible { outline: 2px solid var(--tom); outline-offset: -2px; }
+  .btn {
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.5em 1.1em;
+    border: 1px solid var(--tom);
+    background: var(--tom-w);
+    color: var(--tom);
+    cursor: pointer;
+  }
+  .btn:disabled { opacity: 0.5; cursor: wait; }
+  .hint {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    margin: var(--s2) 0 0;
+  }
+  .starters { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: var(--s2) 0 0; }
+  .starter {
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    padding: 0.35em 0.7em;
+    border: 1px dashed var(--line);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .starter:hover { border-color: var(--tom); color: var(--tom); }
+
+  .colophon {
+    border-top: 1px solid var(--line);
+    margin-top: var(--s5);
+    padding: var(--s4) 0 var(--s6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    text-align: center;
+  }
+  .colophon a { color: var(--dvina); text-decoration: none; }
+  .colophon__seal { letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; }
+</style>
+
+<div class="page">
+  <div class="wrap">
+
+    <header class="hero">
+      <span class="eyebrow">Свод рода · Поисковый инструмент</span>
+      <h1 class="hero__title">Поиск по фамилии</h1>
+      <p class="hero__lede">
+        Выберите фамилию — и открывайте архивные базы сразу с готовым запросом.
+        А внизу — ИИ-помощник, который знает наш род и подскажет, где искать дальше.
+      </p>
+      <a class="backlink" href="./index.html">← вернуться к своду рода «Две реки»</a>
+    </header>
+
+    <section class="gen">
+      <div class="gen__head">
+        <span class="gen__numeral">ШАГ 1</span>
+        <h2 class="gen__title">Чью фамилию ищем</h2>
+        <p class="gen__note">Нажмите на фамилию — все ссылки ниже перестроятся под неё. Можно вписать свою.</p>
+      </div>
+
+      <div class="picker" id="picker">
+        <button class="fam fam--on" data-s="Репницын">Репницын</button>
+        <button class="fam fam--tom" data-s="Крюков">Крюков</button>
+        <button class="fam" data-s="Лютиков">Лютиков</button>
+        <button class="fam" data-s="Кривошапко">Кривошапко</button>
+        <button class="fam" data-s="Дунаев">Дунаев</button>
+      </div>
+      <div class="custom">
+        <input id="custom" type="text" placeholder="…или впишите другую фамилию и нажмите Enter">
+      </div>
+
+      <p class="variants" id="variants">
+        <b>Проверяйте искажения:</b> деда в лагерной карточке записали «Репнитин» —
+        и из-за одной буквы его не могли найти 85 лет. Для Репницыных проверяйте:
+        <b>Репницин, Репнитин, Репнитцын, Репинцын, Репнин</b>; латиницей
+        <b>Repnitzin, Repnizin, Repnitsyn, Repnitin</b>.
+        Надёжный обходной приём в ОБД «Мемориал»: искать вовсе без фамилии —
+        по имени-отчеству, году рождения и месту (Архангельская обл., Холмогорский р-н).
+        В старых записях женщины — по девичьей фамилии.
+      </p>
+    </section>
+
+    <section class="gen">
+      <div class="gen__head">
+        <span class="gen__numeral">ШАГ 2</span>
+        <h2 class="gen__title">Архивные базы</h2>
+        <p class="gen__note">Каждая ссылка открывается уже с фамилией <b id="cur">Репницын</b> в строке поиска. Наши места: Курья и Холмогоры (Архангельская), Верховажье (Вологодская), Новокузнецк.</p>
+      </div>
+      <div class="bases" id="bases"></div>
+    </section>
+
+    <section class="gen">
+      <div class="gen__head">
+        <span class="gen__numeral">ШАГ 3</span>
+        <h2 class="gen__title">ИИ-помощник рода</h2>
+        <p class="gen__note">Он знает всё, что собрано на странице «Две реки»: имена, даты, деревни, лагерную карточку деда. Спросите, где искать, — или попросите составить запрос в архив.</p>
+      </div>
+
+      <div class="chat">
+        <div class="chat__log" id="log">
+          <div class="msg msg--ai">Здравствуйте! Я помощник по поиску рода Крюковых и Репницыных. Спросите меня, например, где искать метрические книги деревни Курья — или попросите составить письмо в архив.</div>
+        </div>
+        <form class="chat__form" id="form">
+          <textarea id="q" placeholder="Ваш вопрос…" required></textarea>
+          <button class="btn" id="send" type="submit">Спросить</button>
+        </form>
+      </div>
+      <div class="starters">
+        <button class="starter">Где искать метрики деревни Курья?</button>
+        <button class="starter">Как найти фильтрационное дело деда?</button>
+        <button class="starter">Составь запрос в архив Верховажья про Лютиковых</button>
+        <button class="starter">Как искать пропавшего без вести в 1992 году?</button>
+      </div>
+      <p class="hint">Помощник может ошибаться — даты и номера дел всегда проверяйте по документам.</p>
+    </section>
+
+    <footer class="colophon">
+      <span class="colophon__seal">Крюковы · Репницыны</span>
+      <span>Поисковый инструмент свода рода. Собирает Крюков Роман Львович.</span>
+      <span><a href="./index.html">Главная — «Две реки»</a></span>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var surname = "Репницын";
+  var e = encodeURIComponent;
+
+  // {S} — фамилия; {SP} — фамилия + наши места (для полнотекстовых поисков)
+  var SITES = [
+    { role: "1941–1945 · наградные, донесения, пленные", name: "Память народа",
+      what: "Главная военная база. Карточка деда Максима нашлась именно здесь.",
+      url: function (s) { return "https://pamyat-naroda.ru/heroes/?last_name=" + e(s); } },
+    { role: "1941–1945 · безвозвратные потери", name: "ОБД «Мемориал»",
+      what: "Погибшие, пленные, пропавшие без вести. Ищите и искажённые написания.",
+      url: function (s) { return "https://obd-memorial.ru/html/fio.htm?entities=000000000000011&entity=000000000000011&fulltext=" + e(s); } },
+    { role: "1941–1945 · награды", name: "Подвиг народа",
+      what: "Наградные листы и приказы.",
+      url: function (s) { return "http://podvignaroda.ru/?#tab=navResult:%D0%9F%D0%BE%D0%B8%D1%81%D0%BA&last_name=" + e(s); } },
+    { role: "1914–1918 · Первая мировая", name: "Памяти героев Великой войны",
+      what: "Прадеды Константин и Фёдор (~1880-е) по возрасту могли служить в ПМВ.",
+      url: function (s) { return "https://gwar.mil.ru/heroes/?last_name=" + e(s); } },
+    { role: "Дорога памяти · музей", name: "1418 шагов (1418museum.ru)",
+      what: "Фотографии и истории участников войны, загруженные родными.",
+      url: function (s) { return "https://1418museum.ru/search/?q=" + e(s); } },
+    { role: "Метрики и переписи · рукописи", name: "Яндекс Архивы",
+      what: "Распознанные метрические книги. Пробуйте с местом: «" + "Курья», «Верховажье».",
+      url: function (s) { return "https://ya.ru/archive/search?text=" + e(s); } },
+    { role: "Сообщество генеалогов", name: "Форум ВГД",
+      what: "Часто по фамилии уже есть тема — там ищут дальние родственники.",
+      url: function (s) { return "https://forum.vgd.ru/search.php?query=" + e(s); } },
+    { role: "Люди и места", name: "Familio",
+      what: "Фамилии, привязанные к населённым пунктам; можно оставить свою заметку.",
+      url: function (s) { return "https://familio.org/search?query=" + e(s); } },
+    { role: "Весь интернет", name: "Яндекс",
+      what: "Просто поиск: фамилия + деревня. Иногда срабатывает лучше архивов.",
+      url: function (s) { return "https://yandex.ru/search/?text=" + e(s + " Курья Холмогоры Верховажье родословная"); } }
+  ];
+
+  var basesEl = document.getElementById("bases");
+  var curEl = document.getElementById("cur");
+
+  function render() {
+    curEl.textContent = surname;
+    basesEl.innerHTML = "";
+    SITES.forEach(function (site) {
+      var a = document.createElement("a");
+      a.className = "base";
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.href = site.url(surname);
+      a.innerHTML = '<span class="base__role">' + site.role + '</span>' +
+        '<span class="base__name">' + site.name + ' →</span>' +
+        '<span class="base__what">' + site.what + '</span>';
+      basesEl.appendChild(a);
+    });
+  }
+
+  document.getElementById("picker").addEventListener("click", function (ev) {
+    var b = ev.target.closest(".fam");
+    if (!b) return;
+    document.querySelectorAll(".fam").forEach(function (x) { x.classList.remove("fam--on"); });
+    b.classList.add("fam--on");
+    surname = b.dataset.s;
+    document.getElementById("custom").value = "";
+    render();
+  });
+
+  document.getElementById("custom").addEventListener("keydown", function (ev) {
+    if (ev.key !== "Enter") return;
+    ev.preventDefault();
+    var v = this.value.trim();
+    if (!v) return;
+    surname = v;
+    document.querySelectorAll(".fam").forEach(function (x) { x.classList.remove("fam--on"); });
+    render();
+  });
+
+  render();
+
+  /* ---------- ИИ-чат ---------- */
+
+  var API = "https://rodoslov-bot.trainingsw75.workers.dev/chat";
+  var log = document.getElementById("log");
+  var form = document.getElementById("form");
+  var q = document.getElementById("q");
+  var send = document.getElementById("send");
+  var history = [];
+
+  function addMsg(cls, text) {
+    var d = document.createElement("div");
+    d.className = "msg " + cls;
+    d.textContent = text;
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+    return d;
+  }
+
+  function ask(question) {
+    addMsg("msg--user", question);
+    var wait = addMsg("msg--ai msg--wait", "Думаю…");
+    send.disabled = true;
+    fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: question, history: history })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        wait.remove();
+        var answer = d.answer || ("Ошибка: " + (d.error || "нет ответа"));
+        addMsg("msg--ai", answer);
+        history.push({ role: "user", content: question }, { role: "assistant", content: answer });
+        history = history.slice(-8);
+      })
+      .catch(function () {
+        wait.remove();
+        addMsg("msg--ai", "Не получилось связаться с помощником. Проверьте интернет и попробуйте ещё раз.");
+      })
+      .finally(function () { send.disabled = false; });
+  }
+
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var v = q.value.trim();
+    if (!v) return;
+    q.value = "";
+    ask(v);
+  });
+  q.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter" && !ev.shiftKey) {
+      ev.preventDefault();
+      form.requestSubmit();
+    }
+  });
+  document.querySelectorAll(".starter").forEach(function (b) {
+    b.addEventListener("click", function () { ask(b.textContent); });
+  });
+})();
+</script>
+
+</body>
+</html>
