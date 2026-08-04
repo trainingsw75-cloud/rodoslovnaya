@@ -547,6 +547,22 @@
       </div>
     </div>
 
+    <style>
+      .tool-link {
+        display: flex; flex-direction: column; gap: var(--s1);
+        background: var(--bone); border: 1px solid var(--line);
+        border-left: 3px solid var(--dvina);
+        padding: var(--s3); margin: 0 0 var(--s4);
+        text-decoration: none; color: inherit;
+      }
+      .tool-link:hover { border-left-color: var(--tom); }
+      .tool-link__role {
+        font-family: var(--sans); font-size: 0.63rem; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--ink-faint); font-weight: 600;
+      }
+      .tool-link__name { font-size: 1.15rem; color: var(--dvina); }
+      .tool-link__what { font-family: var(--sans); font-size: 0.9rem; color: var(--ink-soft); }
+    </style>
     <a class="tool-link" href="./poisk.html">
       <span class="tool-link__role">Новое · поисковый инструмент</span>
       <span class="tool-link__name">Поиск по фамилии с ИИ-помощником →</span>
